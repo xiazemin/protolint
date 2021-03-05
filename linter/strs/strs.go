@@ -91,8 +91,26 @@ func IsLowerCase(s string) bool {
 	return true
 }
 
-// toSnake converts s to snake_case.
-func toSnake(s string) string {
+// ToSnake converts s to snake_case.
+func ToLowerSnake(s string) string {
+	output := ""
+	s = strings.TrimSpace(s)
+	priorLower := false
+	for _, c := range s {
+		if priorLower && isUpper(c) {
+			output += "_"
+		}
+		if isUpper(c) {
+			c = c - 'A' + 'a'
+		}
+		output += string(c)
+		priorLower = isLower(c)
+	}
+	return output
+}
+
+// ToSnake converts s to snake_case.
+func ToSnake(s string) string {
 	output := ""
 	s = strings.TrimSpace(s)
 	priorLower := false
@@ -118,7 +136,7 @@ func SplitCamelCaseWord(s string) []string {
 	if !isCamelCase(s) {
 		return nil
 	}
-	return SplitSnakeCaseWord(toSnake(s))
+	return SplitSnakeCaseWord(ToSnake(s))
 }
 
 // SplitSnakeCaseWord splits a snake_case word into its parts.

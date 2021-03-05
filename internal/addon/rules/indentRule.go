@@ -369,6 +369,7 @@ func (v indentVisitor) fix() error {
 	var fixedLines []string
 	for i, line := range v.protoLines {
 		lines := []string{line}
+
 		if fixes, ok := v.indentFixes[i]; ok {
 			lines[0] = fixes[0].replacement + line[fixes[0].currentChars:]
 			shouldFixed = true
